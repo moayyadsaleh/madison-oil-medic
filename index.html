@@ -308,6 +308,306 @@
           overflow-x: auto;
         }
       }
+
+      /* Ultra-modern mobile navigation + conversion CTA */
+      .mobile-menu-toggle {
+        display: none;
+        width: 48px;
+        height: 48px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 17px;
+        background:
+          radial-gradient(
+            circle at 30% 0%,
+            rgba(112, 255, 210, 0.16),
+            transparent 42%
+          ),
+          rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+        position: relative;
+        place-items: center;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 18px 45px rgba(0, 0, 0, 0.28);
+        transition:
+          transform 0.22s ease,
+          border-color 0.22s ease,
+          background 0.22s ease,
+          box-shadow 0.22s ease;
+      }
+
+      .mobile-menu-toggle:hover {
+        transform: translateY(-2px);
+        border-color: rgba(112, 255, 210, 0.36);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 22px 60px rgba(0, 0, 0, 0.35),
+          0 0 36px rgba(112, 255, 210, 0.12);
+      }
+
+      .mobile-menu-toggle span {
+        position: absolute;
+        left: 13px;
+        width: 22px;
+        height: 2px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--neon), var(--blue));
+        box-shadow: 0 0 16px rgba(112, 255, 210, 0.35);
+        transition:
+          transform 0.28s ease,
+          opacity 0.2s ease,
+          top 0.28s ease;
+      }
+
+      .mobile-menu-toggle span:nth-child(1) {
+        top: 15px;
+      }
+
+      .mobile-menu-toggle span:nth-child(2) {
+        top: 23px;
+      }
+
+      .mobile-menu-toggle span:nth-child(3) {
+        top: 31px;
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle span:nth-child(1) {
+        top: 23px;
+        transform: rotate(45deg);
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle span:nth-child(3) {
+        top: 23px;
+        transform: rotate(-45deg);
+      }
+
+      .mobile-menu {
+        display: none;
+      }
+
+      .floating-mobile-cta {
+        display: none;
+      }
+
+      @media (max-width: 940px) {
+        .mobile-menu-toggle {
+          display: grid;
+        }
+
+        .desktop-quote-btn {
+          display: none;
+        }
+
+        .mobile-menu {
+          display: block;
+          position: fixed;
+          inset: 78px 0 auto 0;
+          z-index: 79;
+          padding: 0 14px 14px;
+          pointer-events: none;
+          opacity: 0;
+          transform: translateY(-10px) scale(0.985);
+          transition:
+            opacity 0.24s ease,
+            transform 0.24s ease;
+        }
+
+        body.mobile-menu-open .mobile-menu {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          pointer-events: auto;
+        }
+
+        .mobile-menu::before {
+          content: "";
+          position: fixed;
+          inset: 78px 0 0 0;
+          background: rgba(3, 5, 10, 0.58);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          opacity: 0;
+          transition: opacity 0.24s ease;
+          pointer-events: none;
+        }
+
+        body.mobile-menu-open .mobile-menu::before {
+          opacity: 1;
+        }
+
+        .mobile-menu-panel {
+          width: min(100%, 760px);
+          margin: 0 auto;
+          padding: 16px;
+          border-radius: 28px;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          background:
+            radial-gradient(
+              circle at 12% 0%,
+              rgba(112, 255, 210, 0.16),
+              transparent 34%
+            ),
+            radial-gradient(
+              circle at 90% 8%,
+              rgba(131, 170, 255, 0.16),
+              transparent 36%
+            ),
+            rgba(5, 8, 16, 0.94);
+          box-shadow:
+            0 34px 120px rgba(0, 0, 0, 0.58),
+            inset 0 1px 0 rgba(255, 255, 255, 0.11);
+          backdrop-filter: blur(26px) saturate(150%);
+          -webkit-backdrop-filter: blur(26px) saturate(150%);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .mobile-menu-panel::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            115deg,
+            transparent,
+            rgba(255, 255, 255, 0.08),
+            transparent
+          );
+          transform: translateX(-120%);
+          animation: mobileMenuShine 6s ease-in-out infinite;
+          pointer-events: none;
+        }
+
+        @keyframes mobileMenuShine {
+          0%,
+          58%,
+          100% {
+            transform: translateX(-120%);
+            opacity: 0;
+          }
+          72% {
+            opacity: 1;
+          }
+          90% {
+            transform: translateX(120%);
+            opacity: 0;
+          }
+        }
+
+        .mobile-menu-panel > a {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 14px;
+          border-radius: 18px;
+          color: #eaf2ff;
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          border: 1px solid transparent;
+          transition:
+            background 0.18s ease,
+            transform 0.18s ease,
+            border-color 0.18s ease,
+            color 0.18s ease;
+        }
+
+        .mobile-menu-panel > a::after {
+          content: "›";
+          color: var(--neon);
+          font-size: 1.35rem;
+          line-height: 1;
+          text-shadow: 0 0 18px rgba(112, 255, 210, 0.28);
+        }
+
+        .mobile-menu-panel > a:hover,
+        .mobile-menu-panel > a:focus-visible {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(112, 255, 210, 0.2);
+          color: var(--neon);
+          transform: translateX(4px);
+        }
+
+        .mobile-menu-actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-top: 12px;
+          padding-top: 14px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-actions .btn {
+          width: 100%;
+          min-height: 50px;
+        }
+
+        .floating-mobile-cta {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 10px;
+          align-items: center;
+          position: fixed;
+          left: 13px;
+          right: 13px;
+          bottom: 13px;
+          z-index: 70;
+          padding: 10px;
+          border-radius: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          background:
+            radial-gradient(
+              circle at 0% 0%,
+              rgba(112, 255, 210, 0.15),
+              transparent 45%
+            ),
+            rgba(3, 5, 10, 0.86);
+          box-shadow:
+            0 24px 80px rgba(0, 0, 0, 0.46),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(20px) saturate(150%);
+          -webkit-backdrop-filter: blur(20px) saturate(150%);
+        }
+
+        .floating-mobile-cta span {
+          padding-left: 8px;
+          font-size: 0.86rem;
+          line-height: 1.2;
+          color: var(--muted);
+          font-weight: 800;
+        }
+
+        .floating-mobile-cta strong {
+          display: block;
+          color: var(--ink);
+          font-size: 0.95rem;
+        }
+
+        .floating-mobile-cta .btn {
+          padding: 12px 15px;
+          min-height: 44px;
+        }
+
+        body.mobile-menu-open {
+          overflow: hidden;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .mobile-menu-actions {
+          grid-template-columns: 1fr;
+        }
+
+        .floating-mobile-cta {
+          grid-template-columns: 1fr;
+        }
+
+        .floating-mobile-cta span {
+          display: none;
+        }
+      }
     </style>
 
     <script type="application/ld+json">
@@ -386,7 +686,40 @@
           <a href="#faq">FAQ</a>
           <a href="tel:+16080000000">Call</a>
         </div>
-        <a class="btn btn-primary" href="#online-booking">Text for Quote</a>
+        <a class="btn btn-primary desktop-quote-btn" href="#online-booking"
+          >Text for Quote</a
+        >
+
+        <button
+          class="mobile-menu-toggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-panel">
+          <a href="#services">Services</a>
+          <a href="#value">Why Book</a>
+          <a href="#urgent-help">Urgent Help</a>
+          <a href="#packages">Packages</a>
+          <a href="#who">Who It Helps</a>
+          <a href="#checklist">150+ Check</a>
+          <a href="#symptoms">Symptoms</a>
+          <a href="#visual-proof">Visual Proof</a>
+          <a href="#areas">Cities</a>
+          <a href="#faq">FAQ</a>
+          <div class="mobile-menu-actions">
+            <a class="btn btn-primary" href="#online-booking">Get Fast Quote</a>
+            <a class="btn btn-secondary" href="tel:+16080000000">Call Now</a>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -2442,6 +2775,18 @@
       </div>
     </section>
 
+    <div class="floating-mobile-cta" aria-label="Fast mobile quote shortcut">
+      <span
+        ><strong>Need mobile service?</strong> Quote first. No shop waiting
+        room.</span
+      >
+      <a
+        class="btn btn-primary"
+        href="sms:+16080000000?&body=Hi%20Madison%20Oil%20Medic%2C%20I%20want%20a%20fast%20mobile%20quote.%20Vehicle%3A%20%20Service%3A%20%20City%3A%20%20Parking%3A%20"
+        >Text Quote</a
+      >
+    </div>
+
     <footer>
       <div class="container footer-grid">
         <div>
@@ -2457,6 +2802,42 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      (function () {
+        const toggle = document.querySelector(".mobile-menu-toggle");
+        const menu = document.querySelector("#mobile-menu");
+        const links = document.querySelectorAll("#mobile-menu a");
+
+        if (!toggle || !menu) return;
+
+        function setMenu(open) {
+          document.body.classList.toggle("mobile-menu-open", open);
+          toggle.setAttribute("aria-expanded", String(open));
+          toggle.setAttribute(
+            "aria-label",
+            open ? "Close navigation menu" : "Open navigation menu",
+          );
+          menu.setAttribute("aria-hidden", String(!open));
+        }
+
+        toggle.addEventListener("click", () => {
+          setMenu(!document.body.classList.contains("mobile-menu-open"));
+        });
+
+        links.forEach((link) => {
+          link.addEventListener("click", () => setMenu(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") setMenu(false);
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 940) setMenu(false);
+        });
+      })();
+    </script>
 
     <script src="script.js" defer></script>
   </body>
