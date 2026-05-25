@@ -2821,12 +2821,46 @@
           menu.setAttribute("aria-hidden", String(!open));
         }
 
+        function getStickyOffset() {
+          const nav = document.querySelector(".nav");
+          return nav ? nav.offsetHeight + 14 : 90;
+        }
+
+        function smoothScrollToHash(hash) {
+          if (!hash || hash === "#") return;
+
+          const target = document.querySelector(hash);
+          if (!target) return;
+
+          const top =
+            target.getBoundingClientRect().top +
+            window.pageYOffset -
+            getStickyOffset();
+
+          window.scrollTo({ top, behavior: "smooth" });
+          history.pushState(null, "", hash);
+        }
+
         toggle.addEventListener("click", () => {
           setMenu(!document.body.classList.contains("mobile-menu-open"));
         });
 
         links.forEach((link) => {
-          link.addEventListener("click", () => setMenu(false));
+          link.addEventListener("click", (event) => {
+            const href = link.getAttribute("href") || "";
+
+            // Internal section links: stop the browser's default jump/reload-like behavior,
+            // close the menu, then scroll once to the chosen section.
+            if (href.startsWith("#")) {
+              event.preventDefault();
+              setMenu(false);
+              window.requestAnimationFrame(() => smoothScrollToHash(href));
+              return;
+            }
+
+            // Phone/SMS/email links should behave normally, but close the menu first.
+            setMenu(false);
+          });
         });
 
         document.addEventListener("keydown", (event) => {
